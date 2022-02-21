@@ -1,7 +1,10 @@
 package com.noroff.Ass2DataAccess.controllers;
 
 import com.noroff.Ass2DataAccess.models.Customer;
+import com.noroff.Ass2DataAccess.models.CustomerCountry;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+import com.noroff.Ass2DataAccess.data.CustomerRepository;
 
 import java.util.HashMap;
 import java.util.List;
@@ -48,8 +51,10 @@ public class CustomerController {
 
     // 7. Return number of customers in each country, desc
     @GetMapping("/customersInCountries")
-    public HashMap<String, Integer> getNumberOfCustomersInEachCountry() {
-        return null;
+    public List<CustomerCountry> getNumberOfCustomersInEachCountry() {
+        CustomerRepository repo = new CustomerRepository();
+        List<CustomerCountry> resultList = repo.getNoOfCustomersPerCountry();
+        return resultList;
     }
 
     // 8. Return customers who are highest spenders, desc

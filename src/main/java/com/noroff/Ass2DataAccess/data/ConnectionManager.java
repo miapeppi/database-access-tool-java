@@ -5,7 +5,7 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 
 public class ConnectionManager {
-    static final String URL="jdbc:sqlite::resource:Northwind_small.sqlite";
+    static final String URL="jdbc:sqlite::resource:Chinook_Sqlite.sqlite";
     static private ConnectionManager instance; // singleton instance
     private Connection connection;
 
