@@ -45,7 +45,7 @@ public class CustomerRepository implements com.noroff.Ass2DataAccess.data.interf
 
     @Override
     public List<CustomerCountry> getNoOfCustomersPerCountry() {
-        List<CustomerCountry> listOfCountries = new ArrayList<>();
+        List<CustomerCountry> list = new ArrayList<>();
         Connection conn = ConnectionManager.getInstance().getConnection();
 
         try {
@@ -58,7 +58,7 @@ public class CustomerRepository implements com.noroff.Ass2DataAccess.data.interf
                 CustomerCountry custCountry = new CustomerCountry();
                 custCountry.setCountry(resultSet.getString("Country"));
                 custCountry.setNumberOfCustomers(Integer.valueOf(resultSet.getString("COUNT(CustomerId)")));
-                listOfCountries.add(custCountry);
+                list.add(custCountry);
             }
 
             conn.close();
@@ -68,12 +68,12 @@ public class CustomerRepository implements com.noroff.Ass2DataAccess.data.interf
             System.exit(-1);
         }
 
-        return listOfCountries;
+        return list;
     }
 
     @Override
     public List<CustomerSpender> getHighestSpenders() {
-        List<CustomerSpender> listOfCountries = new ArrayList<>();
+        List<CustomerSpender> list = new ArrayList<>();
         Connection conn = ConnectionManager.getInstance().getConnection();
 
         try {
@@ -92,7 +92,7 @@ public class CustomerRepository implements com.noroff.Ass2DataAccess.data.interf
                 custSpender.setFirstName(resultSet.getString("FirstName"));
                 custSpender.setLastName(resultSet.getString("LastName"));
                 custSpender.setTotal(Double.parseDouble(resultSet.getString("tot")));
-                listOfCountries.add(custSpender);
+                list.add(custSpender);
             }
 
             conn.close();
@@ -102,11 +102,47 @@ public class CustomerRepository implements com.noroff.Ass2DataAccess.data.interf
             System.exit(-1);
         }
 
-        return listOfCountries;
+        return list;
     }
 
     @Override
     public List<CustomerGenre> getMostPopularGenre(int id) {
-        return null;
+        List<CustomerGenre> list = new ArrayList<>();
+        Connection conn = ConnectionManager.getInstance().getConnection();
+
+        try {
+            PreparedStatement preparedStatement = conn.prepareStatement(
+                    "SELECT Customer.FirstName AS FirstName, " +
+                            "Customer.LastName AS LastName, COUNT(Track.GenreId) AS GenreCount, " +
+                            "Genre.Name AS GenreName " +
+                            "FROM Customer " +
+                            "INNER JOIN Invoice ON Customer.CustomerId = Invoice.CustomerId " +
+                            "INNER JOIN InvoiceLine ON Invoice.InvoiceId = InvoiceLine.InvoiceId " +
+                            "INNER JOIN Track ON Track.TrackId = InvoiceLine.TrackId " +
+                            "INNER JOIN Genre ON Genre.GenreId = Track.GenreId " +
+                            "WHERE Customer.CustomerId = @CustomerId " +
+                            "GROUP BY FirstName, LastName, Track.GenreId, Genre.Name " +
+                            "ORDER BY COUNT(Track.GenreId) " +
+                            "DESC");
+
+            ResultSet resultSet = preparedStatement.executeQuery();
+
+            while(resultSet.next()) {
+                CustomerGenre custGenre = new CustomerGenre();
+                custGenre.setFirstName(resultSet.getString("FirstName"));
+                custGenre.setLastName(resultSet.getString("LastName"));
+                custGenre.setCount(Integer.valueOf(resultSet.getString("GenreCount")));
+                custGenre.setGenre(resultSet.getString("GenreName"));
+                list.add(custGenre);
+            }
+
+            conn.close();
+
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+            System.exit(-1);
+        }
+
+        return list;
     }
 }

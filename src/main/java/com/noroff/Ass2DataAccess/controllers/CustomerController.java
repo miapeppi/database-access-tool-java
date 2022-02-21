@@ -2,6 +2,7 @@ package com.noroff.Ass2DataAccess.controllers;
 
 import com.noroff.Ass2DataAccess.models.Customer;
 import com.noroff.Ass2DataAccess.models.CustomerCountry;
+import com.noroff.Ass2DataAccess.models.CustomerGenre;
 import com.noroff.Ass2DataAccess.models.CustomerSpender;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -67,9 +68,11 @@ public class CustomerController {
     }
 
     // 9. Return most popular genre for given customer
-    @GetMapping("/:customerId/popular/genre")
-    public List<String> getMostPopularGenre(int customerId) {
-        return null;
+    @GetMapping("/{customerId}/popular/genre")
+    public List<CustomerGenre> getMostPopularGenre(@PathVariable("customerId") int customerId) {
+        CustomerRepository repo = new CustomerRepository();
+        List<CustomerGenre> resultList = repo.getMostPopularGenre(customerId);
+        return resultList;
     }
 
 
