@@ -15,7 +15,35 @@ import java.util.List;
 public class CustomerRepository implements com.noroff.Ass2DataAccess.data.interfaces.CustomerRepository {
     @Override
     public List<Customer> getAll() {
-        return null;
+        List<Customer>list = new ArrayList<>();
+        Connection conn = ConnectionManager.getInstance().getConnection();
+
+        try {
+            PreparedStatement preparedStatement = conn.prepareStatement(
+                    "SELECT CustomerId, FirstName, LastName, Country, PostalCode, Phone, Email FROM Customer");
+
+            ResultSet resultSet = preparedStatement.executeQuery();
+
+            while(resultSet.next()) {
+                Customer customer = new Customer();
+                customer.setCustomerId(resultSet.getInt("CustomerId"));
+                customer.setFirstName(resultSet.getString("FirstName"));
+                customer.setLastName(resultSet.getString("LastName"));
+                customer.setCountry(resultSet.getString("Country"));
+                customer.setPostalCode(resultSet.getString("PostalCode"));
+                customer.setPhone(resultSet.getString("Phone"));
+                customer.setEmail(resultSet.getString("Email"));
+                list.add(customer);
+            }
+
+            conn.close();
+
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+            System.exit(-1);
+        }
+
+        return list;
     }
 
     @Override

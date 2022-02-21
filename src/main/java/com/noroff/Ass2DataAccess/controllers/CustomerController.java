@@ -18,7 +18,9 @@ public class CustomerController {
     // 1. Read all customers
     @GetMapping("/all")
     public List<Customer> getAll() {
-        return null;
+        CustomerRepository repo = new CustomerRepository();
+        List<Customer> resultList = repo.getAll();
+        return resultList;
     }
 
     // 2. Read a specific customer by id
