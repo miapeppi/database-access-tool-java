@@ -1,9 +1,7 @@
 package controllers;
 
 import models.Customer;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
 import java.util.List;
@@ -37,13 +35,13 @@ public class CustomerController {
     }
 
     // 5. Add new customer
-    @GetMapping("/new")
+    @PostMapping("/new")
     public boolean add(Customer newCustomer) {
         return true;
     }
 
     // 6. Update customer
-    @GetMapping("/:customerId/update")
+    @PutMapping("/:customerId/update")
     public Customer updateCustomer(int customerId, Customer updatedCustomer) {
         return null;
     }
