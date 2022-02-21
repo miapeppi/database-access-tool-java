@@ -2,6 +2,7 @@ package com.noroff.Ass2DataAccess.controllers;
 
 import com.noroff.Ass2DataAccess.models.Customer;
 import com.noroff.Ass2DataAccess.models.CustomerCountry;
+import com.noroff.Ass2DataAccess.models.CustomerSpender;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import com.noroff.Ass2DataAccess.data.CustomerRepository;
@@ -54,13 +55,15 @@ public class CustomerController {
     public List<CustomerCountry> getNumberOfCustomersInEachCountry() {
         CustomerRepository repo = new CustomerRepository();
         List<CustomerCountry> resultList = repo.getNoOfCustomersPerCountry();
-        return repo.getNoOfCustomersPerCountry();
+        return resultList;
     }
 
     // 8. Return customers who are highest spenders, desc
     @GetMapping("/highestSpenders")
-    public HashMap<Customer, Double> getHighestSpenders() {
-        return null;
+    public List<CustomerSpender> getHighestSpenders() {
+        CustomerRepository repo = new CustomerRepository();
+        List<CustomerSpender> resultList = repo.getHighestSpenders();
+        return resultList;
     }
 
     // 9. Return most popular genre for given customer

@@ -65,16 +65,44 @@ public class CustomerRepository implements com.noroff.Ass2DataAccess.data.interf
 
         } catch (SQLException ex) {
             ex.printStackTrace();
-            //System.exit(-1);
+            System.exit(-1);
         }
 
         return listOfCountries;
-
     }
 
     @Override
     public List<CustomerSpender> getHighestSpenders() {
-        return null;
+        List<CustomerSpender> listOfCountries = new ArrayList<>();
+        Connection conn = ConnectionManager.getInstance().getConnection();
+
+        try {
+            PreparedStatement preparedStatement = conn.prepareStatement(
+                    "SELECT Invoice.CustomerId, SUM(Total) AS tot, Customer.FirstName, Customer.LastName " +
+                            "FROM Invoice " +
+                            "INNER JOIN Customer ON Invoice.CustomerId = Customer.CustomerId " +
+                            "GROUP BY Invoice.CustomerId, Customer.FirstName, Customer.LastName " +
+                            "ORDER BY tot " +
+                            "DESC");
+
+            ResultSet resultSet = preparedStatement.executeQuery();
+
+            while(resultSet.next()) {
+                CustomerSpender custSpender = new CustomerSpender();
+                custSpender.setFirstName(resultSet.getString("FirstName"));
+                custSpender.setLastName(resultSet.getString("LastName"));
+                custSpender.setTotal(Double.parseDouble(resultSet.getString("tot")));
+                listOfCountries.add(custSpender);
+            }
+
+            conn.close();
+
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+            System.exit(-1);
+        }
+
+        return listOfCountries;
     }
 
     @Override
