@@ -120,10 +120,12 @@ public class CustomerRepository implements com.noroff.Ass2DataAccess.data.interf
                             "INNER JOIN InvoiceLine ON Invoice.InvoiceId = InvoiceLine.InvoiceId " +
                             "INNER JOIN Track ON Track.TrackId = InvoiceLine.TrackId " +
                             "INNER JOIN Genre ON Genre.GenreId = Track.GenreId " +
-                            "WHERE Customer.CustomerId = @CustomerId " +
+                            "WHERE Customer.CustomerId = ? " +
                             "GROUP BY FirstName, LastName, Track.GenreId, Genre.Name " +
                             "ORDER BY COUNT(Track.GenreId) " +
                             "DESC");
+
+            preparedStatement.setString(1, String.valueOf(id));
 
             ResultSet resultSet = preparedStatement.executeQuery();
 
