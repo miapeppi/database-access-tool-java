@@ -1,6 +1,6 @@
-package data.interfaces;
+package com.noroff.Ass2DataAccess.data.interfaces;
 
-import models.Customer;
+import com.noroff.Ass2DataAccess.models.Customer;
 
 import java.util.List;
 

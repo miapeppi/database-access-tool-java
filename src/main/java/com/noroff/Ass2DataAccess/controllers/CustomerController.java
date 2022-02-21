@@ -1,6 +1,6 @@
-package controllers;
+package com.noroff.Ass2DataAccess.controllers;
 
-import models.Customer;
+import com.noroff.Ass2DataAccess.models.Customer;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;

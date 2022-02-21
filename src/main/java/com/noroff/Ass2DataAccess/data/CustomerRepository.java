@@ -1,10 +1,10 @@
-package data;
+package com.noroff.Ass2DataAccess.data;
 
-import models.Customer;
+import com.noroff.Ass2DataAccess.models.Customer;
 
 import java.util.List;
 
-public class CustomerRepository implements data.interfaces.CustomerRepository {
+public class CustomerRepository implements com.noroff.Ass2DataAccess.data.interfaces.CustomerRepository {
     @Override
     public List<Customer> getAll() {
         return null;

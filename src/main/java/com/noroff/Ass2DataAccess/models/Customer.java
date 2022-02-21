@@ -1,4 +1,4 @@
-package models;
+package com.noroff.Ass2DataAccess.models;
 
 public class Customer {
     private Integer customerId;

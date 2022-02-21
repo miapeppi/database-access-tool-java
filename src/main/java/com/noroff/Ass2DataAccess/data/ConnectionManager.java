@@ -1,4 +1,4 @@
-package data;
+package com.noroff.Ass2DataAccess.data;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
