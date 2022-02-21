@@ -53,6 +53,7 @@ public class CustomerController {
     @GetMapping("/customersInCountries")
     public List<CustomerCountry> getNumberOfCustomersInEachCountry() {
         CustomerRepository repo = new CustomerRepository();
+        List<CustomerCountry> resultList = repo.getNoOfCustomersPerCountry();
         return repo.getNoOfCustomersPerCountry();
     }
 

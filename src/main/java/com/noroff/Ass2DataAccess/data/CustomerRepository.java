@@ -57,7 +57,7 @@ public class CustomerRepository implements com.noroff.Ass2DataAccess.data.interf
             while(resultSet.next()) {
                 CustomerCountry custCountry = new CustomerCountry();
                 custCountry.setCountry(resultSet.getString("Country"));
-                //custCountry.setNumberOfCustomers(resultSet.getString());
+                custCountry.setNumberOfCustomers(Integer.valueOf(resultSet.getString("COUNT(CustomerId)")));
                 listOfCountries.add(custCountry);
             }
 
@@ -65,7 +65,7 @@ public class CustomerRepository implements com.noroff.Ass2DataAccess.data.interf
 
         } catch (SQLException ex) {
             ex.printStackTrace();
-            System.exit(-1);
+            //System.exit(-1);
         }
 
         return listOfCountries;
