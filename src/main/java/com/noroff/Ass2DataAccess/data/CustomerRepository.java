@@ -48,22 +48,124 @@ public class CustomerRepository implements com.noroff.Ass2DataAccess.data.interf
 
     @Override
     public Customer get(int customerId) {
-        return null;
+        Customer customer = new Customer();
+        Connection conn = ConnectionManager.getInstance().getConnection();
+
+        try {
+            PreparedStatement preparedStatement = conn.prepareStatement(
+                    "SELECT CustomerId, FirstName, LastName, Country, PostalCode, Phone, Email FROM Customer WHERE CustomerId = ?");
+            preparedStatement.setInt(1, customerId);
+            ResultSet resultSet = preparedStatement.executeQuery();
+
+            while(resultSet.next()) {
+                customer.setCustomerId(resultSet.getInt("CustomerId"));
+                customer.setFirstName(resultSet.getString("FirstName"));
+                customer.setLastName(resultSet.getString("LastName"));
+                customer.setCountry(resultSet.getString("Country"));
+                customer.setPostalCode(resultSet.getString("PostalCode"));
+                customer.setPhone(resultSet.getString("Phone"));
+                customer.setEmail(resultSet.getString("Email"));
+
+            }
+
+            conn.close();
+
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+            System.exit(-1);
+        }
+
+        return customer;
     }
 
     @Override
     public Customer get(String name) {
-        return null;
+        Customer customer = new Customer();
+        Connection conn = ConnectionManager.getInstance().getConnection();
+
+        try {
+            PreparedStatement preparedStatement = conn.prepareStatement(
+                    "SELECT CustomerId, FirstName, LastName, Country, PostalCode, Phone, Email FROM Customer WHERE FirstName LIKE ? OR LastName LIKE ?");
+            preparedStatement.setString(1, name);
+            preparedStatement.setString(2, name);
+            ResultSet resultSet = preparedStatement.executeQuery();
+
+            while(resultSet.next()) {
+                customer.setCustomerId(resultSet.getInt("CustomerId"));
+                customer.setFirstName(resultSet.getString("FirstName"));
+                customer.setLastName(resultSet.getString("LastName"));
+                customer.setCountry(resultSet.getString("Country"));
+                customer.setPostalCode(resultSet.getString("PostalCode"));
+                customer.setPhone(resultSet.getString("Phone"));
+                customer.setEmail(resultSet.getString("Email"));
+
+            }
+
+            conn.close();
+
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+            System.exit(-1);
+        }
+
+        return customer;
     }
 
     @Override
     public List<Customer> getPaged(int limit, int offset) {
-        return null;
+        List<Customer>list = new ArrayList<>();
+        Connection conn = ConnectionManager.getInstance().getConnection();
+
+        try {
+            PreparedStatement preparedStatement = conn.prepareStatement(
+                    "SELECT CustomerId, FirstName, LastName, Country, PostalCode, Phone, Email FROM Customer ORDER BY CustomerId LIMIT ? OFFSET ?");
+            preparedStatement.setInt(1, limit);
+            preparedStatement.setInt(2, offset);
+            ResultSet resultSet = preparedStatement.executeQuery();
+
+            while(resultSet.next()) {
+                Customer customer = new Customer();
+                customer.setCustomerId(resultSet.getInt("CustomerId"));
+                customer.setFirstName(resultSet.getString("FirstName"));
+                customer.setLastName(resultSet.getString("LastName"));
+                customer.setCountry(resultSet.getString("Country"));
+                customer.setPostalCode(resultSet.getString("PostalCode"));
+                customer.setPhone(resultSet.getString("Phone"));
+                customer.setEmail(resultSet.getString("Email"));
+                list.add(customer);
+            }
+
+            conn.close();
+
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+            System.exit(-1);
+        }
+
+        return list;
     }
 
     @Override
-    public boolean add(Customer neCustomer) {
-        return false;
+    public boolean add(Customer newCustomer) {
+        Connection conn = ConnectionManager.getInstance().getConnection();
+
+        try {
+            PreparedStatement preparedStatement = conn.prepareStatement(
+                    "INSERT INTO Customer (FirstName, LastName, Country, PostalCode, Phone, Email) VALUES (?, ?, ?, ?, ?, ?)");
+            preparedStatement.setString(1, newCustomer.getFirstName());
+            preparedStatement.setString(2, newCustomer.getLastName());
+            preparedStatement.setString(3, newCustomer.getCountry());
+            preparedStatement.setString(4, newCustomer.getPostalCode());
+            preparedStatement.setString(5, newCustomer.getPhone());
+            preparedStatement.setString(6, newCustomer.getEmail());
+            preparedStatement.executeUpdate();
+
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+            System.exit(-1);
+        }
+
+        return true;
     }
 
     @Override

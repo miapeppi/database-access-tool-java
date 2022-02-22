@@ -24,27 +24,35 @@ public class CustomerController {
     }
 
     // 2. Read a specific customer by id
-    @GetMapping("/:customerId")
-    public Customer get(int customerId) {
-        return null;
+    @GetMapping("/{customerId}")
+    public Customer get(@PathVariable("customerId") int customerId) {
+        CustomerRepository repo = new CustomerRepository();
+        Customer customer = repo.get(customerId);
+        return customer;
     }
 
     // 3. Read a specific customer by name
-    @GetMapping("/:name")
-    public Customer get(String name) {
-        return null;
+    @GetMapping("/search/{name}")
+    public Customer get(@PathVariable("name") String name) {
+        CustomerRepository repo = new CustomerRepository();
+        Customer customer = repo.get(name);
+        return customer;
     }
 
     // 4. Return a page of customers
-    @GetMapping("/paged")
-    public List<Customer> getPaged(int limit, int offset) {
-        return null;
+    @GetMapping("/paged/{limit}/{offset}")
+    public List<Customer> getPaged(@PathVariable("limit") int limit, @PathVariable("offset") int offset) {
+        CustomerRepository repo = new CustomerRepository();
+        List<Customer> resultList = repo.getPaged(limit, offset);
+        return resultList;
     }
 
     // 5. Add new customer
     @PostMapping("/new")
-    public boolean add(Customer newCustomer) {
-        return true;
+    public boolean add(@RequestBody Customer newCustomer) {
+        CustomerRepository repo = new CustomerRepository();
+        boolean uppdateSuccess = repo.add(newCustomer);
+        return uppdateSuccess;
     }
 
     // 6. Update customer
