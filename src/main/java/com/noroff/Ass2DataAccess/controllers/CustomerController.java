@@ -51,14 +51,14 @@ public class CustomerController {
     @PostMapping("/new")
     public boolean add(@RequestBody Customer newCustomer) {
         CustomerRepository repo = new CustomerRepository();
-        boolean uppdateSuccess = repo.add(newCustomer);
-        return uppdateSuccess;
+        return repo.add(newCustomer);
     }
 
     // 6. Update customer
-    @PutMapping("/:customerId/update")
-    public Customer updateCustomer(int customerId, Customer updatedCustomer) {
-        return null;
+    @PutMapping("/update/{customerId}")
+    public boolean updateCustomer(@PathVariable("customerId") int customerId, @RequestBody Customer updatedCustomer) {
+        CustomerRepository repo = new CustomerRepository();
+        return repo.update(customerId, updatedCustomer);
     }
 
     // 7. Return number of customers in each country, desc

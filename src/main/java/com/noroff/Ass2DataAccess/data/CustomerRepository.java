@@ -169,8 +169,27 @@ public class CustomerRepository implements com.noroff.Ass2DataAccess.data.interf
     }
 
     @Override
-    public Customer update(int customerId, Customer updatedCustomer) {
-        return null;
+    public boolean update(int customerId, Customer updatedCustomer) {
+        Connection conn = ConnectionManager.getInstance().getConnection();
+
+        try {
+            PreparedStatement preparedStatement = conn.prepareStatement(
+                    "UPDATE Customer SET FirstName = ?, LastName = ?, Country = ?, PostalCode = ?, Phone = ?, Email = ? WHERE CustomerId = ?");
+            preparedStatement.setString(1, updatedCustomer.getFirstName());
+            preparedStatement.setString(2, updatedCustomer.getLastName());
+            preparedStatement.setString(3, updatedCustomer.getCountry());
+            preparedStatement.setString(4, updatedCustomer.getPostalCode());
+            preparedStatement.setString(5, updatedCustomer.getPhone());
+            preparedStatement.setString(6, updatedCustomer.getEmail());
+            preparedStatement.setInt(7, customerId);
+
+            preparedStatement.executeUpdate();
+
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+            System.exit(-1);
+        }
+        return true;
     }
 
     @Override
