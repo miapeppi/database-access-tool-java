@@ -4,9 +4,11 @@ import com.noroff.Ass2DataAccess.models.Customer;
 import com.noroff.Ass2DataAccess.models.CustomerCountry;
 import com.noroff.Ass2DataAccess.models.CustomerGenre;
 import com.noroff.Ass2DataAccess.models.CustomerSpender;
+import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
+@Repository
 public interface CustomerRepository {
     List<Customer> getAll();
     Customer get(int customerId);

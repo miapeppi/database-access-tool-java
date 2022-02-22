@@ -4,6 +4,7 @@ import com.noroff.Ass2DataAccess.models.Customer;
 import com.noroff.Ass2DataAccess.models.CustomerCountry;
 import com.noroff.Ass2DataAccess.models.CustomerGenre;
 import com.noroff.Ass2DataAccess.models.CustomerSpender;
+import org.springframework.stereotype.Service;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -12,9 +13,9 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+@Service
 public class CustomerRepository implements com.noroff.Ass2DataAccess.data.interfaces.CustomerRepository {
 
-    @Override
     public List<Customer> getAll() {
         List<Customer>list = new ArrayList<>();
         Connection conn = ConnectionManager.getInstance().getConnection();
@@ -47,7 +48,6 @@ public class CustomerRepository implements com.noroff.Ass2DataAccess.data.interf
         return list;
     }
 
-    @Override
     public Customer get(int customerId) {
         Customer customer = new Customer();
         Connection conn = ConnectionManager.getInstance().getConnection();
@@ -79,7 +79,6 @@ public class CustomerRepository implements com.noroff.Ass2DataAccess.data.interf
         return customer;
     }
 
-    @Override
     public Customer get(String name) {
         Customer customer = new Customer();
         Connection conn = ConnectionManager.getInstance().getConnection();
@@ -112,7 +111,6 @@ public class CustomerRepository implements com.noroff.Ass2DataAccess.data.interf
         return customer;
     }
 
-    @Override
     public List<Customer> getPaged(int limit, int offset) {
         List<Customer>list = new ArrayList<>();
         Connection conn = ConnectionManager.getInstance().getConnection();
@@ -146,7 +144,6 @@ public class CustomerRepository implements com.noroff.Ass2DataAccess.data.interf
         return list;
     }
 
-    @Override
     public boolean add(Customer newCustomer) {
         Connection conn = ConnectionManager.getInstance().getConnection();
 
@@ -169,7 +166,6 @@ public class CustomerRepository implements com.noroff.Ass2DataAccess.data.interf
         return true;
     }
 
-    @Override
     public boolean update(int customerId, Customer updatedCustomer) {
         Connection conn = ConnectionManager.getInstance().getConnection();
 
@@ -193,7 +189,6 @@ public class CustomerRepository implements com.noroff.Ass2DataAccess.data.interf
         return true;
     }
 
-    @Override
     public List<CustomerCountry> getNoOfCustomersPerCountry() {
         List<CustomerCountry> list = new ArrayList<>();
         Connection conn = ConnectionManager.getInstance().getConnection();
@@ -221,7 +216,6 @@ public class CustomerRepository implements com.noroff.Ass2DataAccess.data.interf
         return list;
     }
 
-    @Override
     public List<CustomerSpender> getHighestSpenders() {
         List<CustomerSpender> list = new ArrayList<>();
         Connection conn = ConnectionManager.getInstance().getConnection();
@@ -255,7 +249,6 @@ public class CustomerRepository implements com.noroff.Ass2DataAccess.data.interf
         return list;
     }
 
-    @Override
     public List<CustomerGenre> getMostPopularGenre(int id) {
         List<CustomerGenre> list = new ArrayList<>();
         Connection conn = ConnectionManager.getInstance().getConnection();
@@ -285,6 +278,7 @@ public class CustomerRepository implements com.noroff.Ass2DataAccess.data.interf
                 custGenre.setLastName(resultSet.getString("LastName"));
                 custGenre.setCount(Integer.valueOf(resultSet.getString("GenreCount")));
                 custGenre.setGenre(resultSet.getString("GenreName"));
+
                 list.add(custGenre);
             }
 
