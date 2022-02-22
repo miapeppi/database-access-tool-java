@@ -60,14 +60,14 @@ public class CustomerController {
     }
 
     // 7. Return number of customers in each country, desc
-    @GetMapping("/customersInCountries")
+    @GetMapping("/customersincountries")
     public List<CustomerCountry> getNumberOfCustomersInEachCountry() {
         List<CustomerCountry> resultList = repo.getNoOfCustomersPerCountry();
         return resultList;
     }
 
     // 8. Return customers who are highest spenders, desc
-    @GetMapping("/highestSpenders")
+    @GetMapping("/highestspenders")
     public List<CustomerSpender> getHighestSpenders() {
         List<CustomerSpender> resultList = repo.getHighestSpenders();
         return resultList;

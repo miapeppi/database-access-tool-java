@@ -18,9 +18,9 @@ public class CustomerRepository implements com.noroff.Ass2DataAccess.data.interf
 
     public List<Customer> getAll() {
         List<Customer>list = new ArrayList<>();
-        Connection conn = ConnectionManager.getInstance().getConnection();
 
-        try {
+        try (ConnectionManager mng = ConnectionManager.getInstance()){
+            Connection conn = mng.getConnection();
             PreparedStatement preparedStatement = conn.prepareStatement(
                     "SELECT CustomerId, FirstName, LastName, Country, PostalCode, Phone, Email FROM Customer");
 
@@ -38,11 +38,9 @@ public class CustomerRepository implements com.noroff.Ass2DataAccess.data.interf
                 list.add(customer);
             }
 
-            conn.close();
-
         } catch (SQLException ex) {
             ex.printStackTrace();
-            System.exit(-1);
+            return null;
         }
 
         return list;
@@ -50,9 +48,9 @@ public class CustomerRepository implements com.noroff.Ass2DataAccess.data.interf
 
     public Customer get(int customerId) {
         Customer customer = new Customer();
-        Connection conn = ConnectionManager.getInstance().getConnection();
 
-        try {
+        try (ConnectionManager mng = ConnectionManager.getInstance()){
+            Connection conn = mng.getConnection();
             PreparedStatement preparedStatement = conn.prepareStatement(
                     "SELECT CustomerId, FirstName, LastName, Country, PostalCode, Phone, Email FROM Customer WHERE CustomerId = ?");
             preparedStatement.setInt(1, customerId);
@@ -69,11 +67,9 @@ public class CustomerRepository implements com.noroff.Ass2DataAccess.data.interf
 
             }
 
-            conn.close();
-
         } catch (SQLException ex) {
             ex.printStackTrace();
-            System.exit(-1);
+            return null;
         }
 
         return customer;
@@ -81,9 +77,9 @@ public class CustomerRepository implements com.noroff.Ass2DataAccess.data.interf
 
     public Customer get(String name) {
         Customer customer = new Customer();
-        Connection conn = ConnectionManager.getInstance().getConnection();
 
-        try {
+        try (ConnectionManager mng = ConnectionManager.getInstance()){
+            Connection conn = mng.getConnection();
             PreparedStatement preparedStatement = conn.prepareStatement(
                     "SELECT CustomerId, FirstName, LastName, Country, PostalCode, Phone, Email FROM Customer WHERE FirstName LIKE ? OR LastName LIKE ?");
             preparedStatement.setString(1, name);
@@ -101,11 +97,9 @@ public class CustomerRepository implements com.noroff.Ass2DataAccess.data.interf
 
             }
 
-            conn.close();
-
         } catch (SQLException ex) {
             ex.printStackTrace();
-            System.exit(-1);
+            return null;
         }
 
         return customer;
@@ -113,9 +107,9 @@ public class CustomerRepository implements com.noroff.Ass2DataAccess.data.interf
 
     public List<Customer> getPaged(int limit, int offset) {
         List<Customer>list = new ArrayList<>();
-        Connection conn = ConnectionManager.getInstance().getConnection();
 
-        try {
+        try (ConnectionManager mng = ConnectionManager.getInstance()){
+            Connection conn = mng.getConnection();
             PreparedStatement preparedStatement = conn.prepareStatement(
                     "SELECT CustomerId, FirstName, LastName, Country, PostalCode, Phone, Email FROM Customer ORDER BY CustomerId LIMIT ? OFFSET ?");
             preparedStatement.setInt(1, limit);
@@ -134,20 +128,17 @@ public class CustomerRepository implements com.noroff.Ass2DataAccess.data.interf
                 list.add(customer);
             }
 
-            conn.close();
-
         } catch (SQLException ex) {
             ex.printStackTrace();
-            System.exit(-1);
+            return null;
         }
 
         return list;
     }
 
     public boolean add(Customer newCustomer) {
-        Connection conn = ConnectionManager.getInstance().getConnection();
-
-        try {
+        try (ConnectionManager mng = ConnectionManager.getInstance()){
+            Connection conn = mng.getConnection();
             PreparedStatement preparedStatement = conn.prepareStatement(
                     "INSERT INTO Customer (FirstName, LastName, Country, PostalCode, Phone, Email) VALUES (?, ?, ?, ?, ?, ?)");
             preparedStatement.setString(1, newCustomer.getFirstName());
@@ -160,16 +151,15 @@ public class CustomerRepository implements com.noroff.Ass2DataAccess.data.interf
 
         } catch (SQLException ex) {
             ex.printStackTrace();
-            System.exit(-1);
+            return false;
         }
 
         return true;
     }
 
     public boolean update(int customerId, Customer updatedCustomer) {
-        Connection conn = ConnectionManager.getInstance().getConnection();
-
-        try {
+        try (ConnectionManager mng = ConnectionManager.getInstance()){
+            Connection conn = mng.getConnection();
             PreparedStatement preparedStatement = conn.prepareStatement(
                     "UPDATE Customer SET FirstName = ?, LastName = ?, Country = ?, PostalCode = ?, Phone = ?, Email = ? WHERE CustomerId = ?");
             preparedStatement.setString(1, updatedCustomer.getFirstName());
@@ -184,16 +174,16 @@ public class CustomerRepository implements com.noroff.Ass2DataAccess.data.interf
 
         } catch (SQLException ex) {
             ex.printStackTrace();
-            System.exit(-1);
+            return false;
         }
         return true;
     }
 
     public List<CustomerCountry> getNoOfCustomersPerCountry() {
         List<CustomerCountry> list = new ArrayList<>();
-        Connection conn = ConnectionManager.getInstance().getConnection();
 
-        try {
+        try (ConnectionManager mng = ConnectionManager.getInstance()){
+            Connection conn = mng.getConnection();
             PreparedStatement preparedStatement = conn.prepareStatement(
                     "SELECT COUNT(CustomerId), Country FROM Customer GROUP BY Country ORDER BY COUNT(CustomerId) DESC");
 
@@ -206,11 +196,9 @@ public class CustomerRepository implements com.noroff.Ass2DataAccess.data.interf
                 list.add(custCountry);
             }
 
-            conn.close();
-
         } catch (SQLException ex) {
             ex.printStackTrace();
-            System.exit(-1);
+            return null;
         }
 
         return list;
@@ -218,11 +206,18 @@ public class CustomerRepository implements com.noroff.Ass2DataAccess.data.interf
 
     public List<CustomerSpender> getHighestSpenders() {
         List<CustomerSpender> list = new ArrayList<>();
-        Connection conn = ConnectionManager.getInstance().getConnection();
 
-        try {
+        try (ConnectionManager mng = ConnectionManager.getInstance()){
+            Connection conn = mng.getConnection();
             PreparedStatement preparedStatement = conn.prepareStatement(
-                    "SELECT Invoice.CustomerId, SUM(Total) AS tot, Customer.FirstName, Customer.LastName " +
+                    "SELECT Invoice.CustomerId AS CustomerId, " +
+                            "SUM(Total) AS Tot, " +
+                            "Customer.FirstName AS FirstName, " +
+                            "Customer.LastName AS LastName, " +
+                            "Customer.Country AS Country, " +
+                            "Customer.PostalCode AS PostalCode, " +
+                            "Customer.Phone AS Phone, " +
+                            "Customer.Email AS Email " +
                             "FROM Invoice " +
                             "INNER JOIN Customer ON Invoice.CustomerId = Customer.CustomerId " +
                             "GROUP BY Invoice.CustomerId, Customer.FirstName, Customer.LastName " +
@@ -233,17 +228,21 @@ public class CustomerRepository implements com.noroff.Ass2DataAccess.data.interf
 
             while(resultSet.next()) {
                 CustomerSpender custSpender = new CustomerSpender();
+                custSpender.setTotal(Double.parseDouble(resultSet.getString("Tot")));
+
+                custSpender.setCustomerId(resultSet.getInt("CustomerId"));
                 custSpender.setFirstName(resultSet.getString("FirstName"));
                 custSpender.setLastName(resultSet.getString("LastName"));
-                custSpender.setTotal(Double.parseDouble(resultSet.getString("tot")));
+                custSpender.setCountry(resultSet.getString("Country"));
+                custSpender.setPostalCode(resultSet.getString("PostalCode"));
+                custSpender.setPhone(resultSet.getString("Phone"));
+                custSpender.setEmail(resultSet.getString("Email"));
                 list.add(custSpender);
             }
 
-            conn.close();
-
         } catch (SQLException ex) {
             ex.printStackTrace();
-            System.exit(-1);
+            return null;
         }
 
         return list;
@@ -251,12 +250,17 @@ public class CustomerRepository implements com.noroff.Ass2DataAccess.data.interf
 
     public List<CustomerGenre> getMostPopularGenre(int id) {
         List<CustomerGenre> list = new ArrayList<>();
-        Connection conn = ConnectionManager.getInstance().getConnection();
 
-        try {
+        try (ConnectionManager mng = ConnectionManager.getInstance()){
+            Connection conn = mng.getConnection();
             PreparedStatement preparedStatement = conn.prepareStatement(
-                    "SELECT Customer.FirstName AS FirstName, " +
-                            "Customer.LastName AS LastName, COUNT(Track.GenreId) AS GenreCount, " +
+                    "SELECT Customer.CustomerId AS CustomerId, Customer.FirstName AS FirstName, " +
+                            "Customer.LastName AS LastName, " +
+                            "Customer.Country AS Country, " +
+                            "Customer.PostalCode AS PostalCode, " +
+                            "Customer.Phone AS Phone, " +
+                            "Customer.Email AS Email, " +
+                            "COUNT(Track.GenreId) AS GenreCount, " +
                             "Genre.Name AS GenreName " +
                             "FROM Customer " +
                             "INNER JOIN Invoice ON Customer.CustomerId = Invoice.CustomerId " +
@@ -274,19 +278,22 @@ public class CustomerRepository implements com.noroff.Ass2DataAccess.data.interf
 
             while(resultSet.next()) {
                 CustomerGenre custGenre = new CustomerGenre();
-                custGenre.setFirstName(resultSet.getString("FirstName"));
-                custGenre.setLastName(resultSet.getString("LastName"));
                 custGenre.setCount(Integer.valueOf(resultSet.getString("GenreCount")));
                 custGenre.setGenre(resultSet.getString("GenreName"));
+                custGenre.setCustomerId(resultSet.getInt("CustomerId"));
+                custGenre.setFirstName(resultSet.getString("FirstName"));
+                custGenre.setLastName(resultSet.getString("LastName"));
+                custGenre.setCountry(resultSet.getString("Country"));
+                custGenre.setPostalCode(resultSet.getString("PostalCode"));
+                custGenre.setPhone(resultSet.getString("Phone"));
+                custGenre.setEmail(resultSet.getString("Email"));
 
                 list.add(custGenre);
             }
 
-            conn.close();
-
         } catch (SQLException ex) {
             ex.printStackTrace();
-            System.exit(-1);
+            return null;
         }
 
         return list;

@@ -4,7 +4,16 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 
-public class ConnectionManager {
+public class ConnectionManager implements AutoCloseable{
+    static {
+        try {
+            DriverManager.registerDriver(new org.sqlite.JDBC());
+        } catch (SQLException e) {
+            e.printStackTrace();
+            System.exit(-1);
+        }
+    }
+
     static final String URL="jdbc:sqlite::resource:Chinook_Sqlite.sqlite";
     static private ConnectionManager instance; // singleton instance
     private Connection connection;
@@ -16,16 +25,18 @@ public class ConnectionManager {
         return instance;
     }
 
-    private ConnectionManager() {
-        try {
+    private ConnectionManager() {}
+
+    public Connection getConnection() throws SQLException{
+        if(connection == null) {
             connection = DriverManager.getConnection(URL);
-        } catch (SQLException sqe) {
-            sqe.printStackTrace();
-            System.exit(-1);
         }
+        return connection;
     }
 
-    public Connection getConnection() {
-        return connection;
+    @Override
+    public void close() throws SQLException {
+        this.connection.close();
+        this.connection = null;
     }
 }
