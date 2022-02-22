@@ -13,6 +13,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class CustomerRepository implements com.noroff.Ass2DataAccess.data.interfaces.CustomerRepository {
+
     @Override
     public List<Customer> getAll() {
         return null;

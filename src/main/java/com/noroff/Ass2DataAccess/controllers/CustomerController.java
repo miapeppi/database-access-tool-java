@@ -4,11 +4,9 @@ import com.noroff.Ass2DataAccess.models.Customer;
 import com.noroff.Ass2DataAccess.models.CustomerCountry;
 import com.noroff.Ass2DataAccess.models.CustomerGenre;
 import com.noroff.Ass2DataAccess.models.CustomerSpender;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import com.noroff.Ass2DataAccess.data.CustomerRepository;
 
-import java.util.HashMap;
 import java.util.List;
 
 @RestController
