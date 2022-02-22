@@ -13,7 +13,7 @@ public interface CustomerRepository {
     Customer get(String name);
     List<Customer> getPaged(int limit, int offset);
     boolean add(Customer neCustomer);
-    Customer update(int customerId, Customer updatedCustomer);
+    boolean update(int customerId, Customer updatedCustomer);
     List<CustomerCountry> getNoOfCustomersPerCountry();
     List<CustomerSpender> getHighestSpenders();
     List<CustomerGenre> getMostPopularGenre(int id);
