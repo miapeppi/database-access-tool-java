@@ -5,24 +5,41 @@
     <title>Home</title>
 </head>
 <body>
-    <h1>Here are five random artists, songs and genres for you 🎵</h1>
     <div>
-        <h2>Artists</h2>
-        <ul th:each="artist: ${artists}">
-            <li th:text="${artist.getName()}"></li>
-        </ul>
+        <h1>Here are five random artists, songs and genres for you 🎵</h1>
+        <div>
+            <h2>Artists</h2>
+            <ul th:each="artist: ${artists}">
+                <li th:text="${artist.getName()}"></li>
+            </ul>
+        </div>
+        <div>
+            <h2>Songs</h2>
+            <ul th:each="track: ${tracks}">
+                <li th:text="${track.getName()}"></li>
+            </ul>
+        </div>
+        <div>
+            <h2>Genre</h2>
+            <ul th:each="genre: ${genres}">
+                <li th:text="${genre.getName()}"></li>
+            </ul>
+        </div>
     </div>
     <div>
-        <h2>Songs</h2>
-        <ul th:each="track: ${tracks}">
-            <li th:text="${track.getName()}"></li>
-        </ul>
+        <h2>Search for songs</h2>
+        <form th:action="@{/search}" th:object="${track}" method="get">
+            <!--
+            <div>
+                <label>Search: </label>
+                <input id="term" type="text" th:fied="*{name}" />
+            </div>
+            -->
+            <div>
+                <input type="submit" value="Search">
+            </div>
+        </form>
     </div>
-    <div>
-        <h2>Genre</h2>
-        <ul th:each="genre: ${genres}">
-            <li th:text="${genre.getName()}"></li>
-        </ul>
-    </div>
+
 </body>
 </html>

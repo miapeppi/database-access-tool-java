@@ -21,4 +21,9 @@ public class TrackController {
         List<Track> resultList = repo.getRandom(amount);
         return resultList;
     }
+
+    public List<Track> search(String term) {
+        List<Track> resultList = repo.search(term);
+        return resultList;
+    }
 }

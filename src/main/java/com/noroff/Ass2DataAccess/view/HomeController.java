@@ -34,4 +34,12 @@ public class HomeController {
         model.addAttribute("genres", genreController.getRandom(5));
         return "home";
     }
+
+    @GetMapping("/search")
+    public String search(
+            Model model
+    ) {
+        model.addAttribute("searchResults", trackController.search("Intro"));
+        return "results";
+    }
 }
