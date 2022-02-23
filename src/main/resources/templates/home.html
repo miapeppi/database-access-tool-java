@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Home</title>
+</head>
+<body>
+    <h1>Here are five random artists, songs and genres for you 🎵</h1>
+    <div>
+        <h2>Artists</h2>
+        <ul th:each="artist: ${artists}">
+            <li th:text="${artist.getName()}"></li>
+        </ul>
+    </div>
+    <div>
+        <h2>Songs</h2>
+        <ul>
+            <li>Song 1</li>
+        </ul>
+    </div>
+    <div>
+        <h2>Genre</h2>
+        <ul>
+            <li>Genre 1</li>
+        </ul>
+    </div>
+</body>
+</html>

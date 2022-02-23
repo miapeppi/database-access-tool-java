@@ -1,9 +1,12 @@
 package com.noroff.Ass2DataAccess.data;
 
+import org.springframework.stereotype.Service;
+
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 
+@Service
 public class ConnectionManager implements AutoCloseable{
     static {
         try {
