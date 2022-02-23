@@ -21,7 +21,7 @@ public class TrackRepository implements com.noroff.Ass2DataAccess.data.interface
         try (ConnectionManager mng = ConnectionManager.getInstance()){
             Connection conn = mng.getConnection();
             PreparedStatement preparedStatement = conn.prepareStatement(
-                    "SELECT TrackId, Name from Track BY random() LIMIT ?");
+                    "SELECT TrackId, Name from Track ORDER BY random() LIMIT ?");
 
             preparedStatement.setString(1, toString().valueOf(amount));
 

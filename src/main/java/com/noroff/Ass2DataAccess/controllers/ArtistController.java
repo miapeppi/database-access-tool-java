@@ -17,8 +17,8 @@ public class ArtistController {
     public ArtistController(@Autowired ArtistRepository artistRepository) {this.repo = artistRepository; }
 
     @GetMapping("/random")
-    public List<Artist> getRandom() {
-        List<Artist> resultList = repo.getRandom(5);
+    public List<Artist> getRandom(int amount) {
+        List<Artist> resultList = repo.getRandom(amount);
         return resultList;
     }
 }

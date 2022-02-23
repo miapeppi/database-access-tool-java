@@ -14,14 +14,14 @@
     </div>
     <div>
         <h2>Songs</h2>
-        <ul>
-            <li>Song 1</li>
+        <ul th:each="track: ${tracks}">
+            <li th:text="${track.getName()}"></li>
         </ul>
     </div>
     <div>
         <h2>Genre</h2>
-        <ul>
-            <li>Genre 1</li>
+        <ul th:each="genre: ${genres}">
+            <li th:text="${genre.getName()}"></li>
         </ul>
     </div>
 </body>
