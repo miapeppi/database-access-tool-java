@@ -11,6 +11,8 @@ public class Track {
     private byte bytes;
     private double unitPrice;
 
+    public Track() {}
+
     public Track(Integer trackId, String name, Album album, Integer mediaTypeId, Genre genre, String composer, long milliseconds, byte bytes, double unitPrice) {
         this.trackId = trackId;
         this.name = name;
