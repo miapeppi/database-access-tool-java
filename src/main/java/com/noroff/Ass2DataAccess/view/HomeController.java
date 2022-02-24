@@ -6,6 +6,7 @@ import com.noroff.Ass2DataAccess.controllers.TrackController;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 
 @Controller
@@ -36,10 +37,19 @@ public class HomeController {
     }
 
     @GetMapping("/search")
-    public String search(
+    public String search (
+            @RequestParam( name = "query", required = true) String query,
             Model model
     ) {
-        model.addAttribute("searchResults", trackController.search("Intro"));
-        return "results";
+        if(query != null && !query.equals("")) {
+            model.addAttribute("searchResults", trackController.search(query.toLowerCase()));
+            model.addAttribute("query", query);
+            return "results";
+        } else {
+            model.addAttribute("artists", artistController.getRandom(5));
+            model.addAttribute("tracks", trackController.getRandom(5));
+            model.addAttribute("genres", genreController.getRandom(5));
+            return "home";
+        }
     }
 }

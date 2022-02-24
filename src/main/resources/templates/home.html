@@ -29,10 +29,10 @@
     </div>
     <div>
         <h2>Search for songs</h2>
-        <form th:action="@{/search}" th:object="${track}" method="get">
+        <form th:action="@{/search}" method="get">
             <div>
-                <label for="term">Search: </label>
-                <input id="term" type="text" />
+                <label for="query">Search: </label>
+                <input id="query" type="text" th:name="query" th:value="${query}"/>
             </div>
             <div>
                 <input type="submit" value="Search">
