@@ -54,7 +54,7 @@ public class TrackRepository implements com.noroff.Ass2DataAccess.data.interface
                             "Genre.Name AS GenreName " +
                             "FROM Track INNER JOIN Album ON Track.AlbumId = Album.AlbumId " +
                             "INNER JOIN Genre ON Track.GenreId = Genre.GenreId " +
-                            "WHERE TrackName LIKE ? " +
+                            "WHERE LOWER(TrackName) LIKE ? " +
                             "GROUP BY Track.TrackId, Track.Name, Track.Composer " +
                             "ORDER BY TrackId DESC");
 
