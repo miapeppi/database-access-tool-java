@@ -30,9 +30,9 @@ public class HomeController {
     public String view(
             Model model
     ) {
-        model.addAttribute("artists", artistController.getRandom(5));
-        model.addAttribute("tracks", trackController.getRandom(5));
-        model.addAttribute("genres", genreController.getRandom(5));
+        model.addAttribute("artists", artistController.getRandom());
+        model.addAttribute("tracks", trackController.getRandom());
+        model.addAttribute("genres", genreController.getRandom());
         return "home";
     }
 
@@ -46,9 +46,9 @@ public class HomeController {
             model.addAttribute("query", query);
             return "results";
         } else {
-            model.addAttribute("artists", artistController.getRandom(5));
-            model.addAttribute("tracks", trackController.getRandom(5));
-            model.addAttribute("genres", genreController.getRandom(5));
+            model.addAttribute("artists", artistController.getRandom());
+            model.addAttribute("tracks", trackController.getRandom());
+            model.addAttribute("genres", genreController.getRandom());
             return "home";
         }
     }

@@ -17,8 +17,8 @@ public class GenreController {
     public GenreController(@Autowired GenreRepository genreRepository) { this.repo = genreRepository; }
 
     @GetMapping("/random")
-    public List<Genre> getRandom(int amount) {
-        List<Genre> resultList = repo.getRandom(amount);
+    public List<Genre> getRandom() {
+        List<Genre> resultList = repo.getRandom(5);
         return resultList;
     }
 }

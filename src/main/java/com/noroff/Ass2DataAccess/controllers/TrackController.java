@@ -17,11 +17,12 @@ public class TrackController {
     public TrackController(@Autowired TrackRepository trackRepository) { this.repo = trackRepository; }
 
     @GetMapping("/random")
-    public List<Track> getRandom(int amount) {
-        List<Track> resultList = repo.getRandom(amount);
+    public List<Track> getRandom() {
+        List<Track> resultList = repo.getRandom(5);
         return resultList;
     }
 
+    @GetMapping("/search")
     public List<Track> search(String term) {
         List<Track> resultList = repo.search(term);
         return resultList;
