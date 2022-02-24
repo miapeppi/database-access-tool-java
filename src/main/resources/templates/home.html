@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<link rel="stylesheet" th:href="@{/css/main.css}">
 <head>
     <meta charset="UTF-8">
     <title>Home</title>
@@ -29,12 +30,10 @@
     <div>
         <h2>Search for songs</h2>
         <form th:action="@{/search}" th:object="${track}" method="get">
-            <!--
             <div>
-                <label>Search: </label>
-                <input id="term" type="text" th:fied="*{name}" />
+                <label for="term">Search: </label>
+                <input id="term" type="text" />
             </div>
-            -->
             <div>
                 <input type="submit" value="Search">
             </div>
