@@ -1,6 +1,7 @@
 package com.noroff.Ass2DataAccess.data;
 
 import com.noroff.Ass2DataAccess.models.Artist;
+import org.springframework.stereotype.Service;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -9,6 +10,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+@Service
 public class ArtistRepository implements com.noroff.Ass2DataAccess.data.interfaces.ArtistRepository {
     public List<Artist> getRandom(int amount) {
         List<Artist>list = new ArrayList<>();

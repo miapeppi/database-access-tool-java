@@ -1,6 +1,5 @@
 package com.noroff.Ass2DataAccess.controllers;
 
-import com.noroff.Ass2DataAccess.data.TrackRepository;
 import com.noroff.Ass2DataAccess.models.Customer;
 import com.noroff.Ass2DataAccess.models.CustomerCountry;
 import com.noroff.Ass2DataAccess.models.CustomerGenre;

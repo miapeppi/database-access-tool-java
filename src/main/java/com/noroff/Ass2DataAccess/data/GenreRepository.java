@@ -1,6 +1,7 @@
 package com.noroff.Ass2DataAccess.data;
 
 import com.noroff.Ass2DataAccess.models.Genre;
+import org.springframework.stereotype.Service;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -9,6 +10,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+@Service
 public class GenreRepository implements com.noroff.Ass2DataAccess.data.interfaces.GenreRepository{
     public List<Genre> getRandom(int amount) {
         List<Genre>list = new ArrayList<>();

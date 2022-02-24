@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<link rel="stylesheet" th:href="@{/css/main.css}">
+<head>
+    <meta charset="UTF-8">
+    <title>Home</title>
+</head>
+<body>
+    <div>
+        <h1>Here are five random artists, songs and genres for you 🎵</h1>
+        <div>
+            <h2>Artists</h2>
+            <ul th:each="artist: ${artists}">
+                <li th:text="${artist.getName()}"></li>
+            </ul>
+        </div>
+        <div>
+            <h2>Songs</h2>
+            <ul th:each="track: ${tracks}">
+                <li th:text="${track.getName()}"></li>
+            </ul>
+        </div>
+        <div>
+            <h2>Genre</h2>
+            <ul th:each="genre: ${genres}">
+                <li th:text="${genre.getName()}"></li>
+            </ul>
+        </div>
+    </div>
+    <div>
+        <h2>Search for songs</h2>
+        <form th:action="@{/search}" th:object="${track}" method="get">
+            <div>
+                <label for="term">Search: </label>
+                <input id="term" type="text" />
+            </div>
+            <div>
+                <input type="submit" value="Search">
+            </div>
+        </form>
+    </div>
+
+</body>
+</html>

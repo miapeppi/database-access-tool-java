@@ -4,6 +4,7 @@ import com.noroff.Ass2DataAccess.models.Album;
 import com.noroff.Ass2DataAccess.models.Artist;
 import com.noroff.Ass2DataAccess.models.Genre;
 import com.noroff.Ass2DataAccess.models.Track;
+import org.springframework.stereotype.Service;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -12,6 +13,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+@Service
 public class TrackRepository implements com.noroff.Ass2DataAccess.data.interfaces.TrackRepository{
     public List<Track> getRandom(int amount) {
         List<Track>list = new ArrayList<>();
@@ -19,7 +21,7 @@ public class TrackRepository implements com.noroff.Ass2DataAccess.data.interface
         try (ConnectionManager mng = ConnectionManager.getInstance()){
             Connection conn = mng.getConnection();
             PreparedStatement preparedStatement = conn.prepareStatement(
-                    "SELECT TrackId, Name from Track BY random() LIMIT ?");
+                    "SELECT TrackId, Name from Track ORDER BY random() LIMIT ?");
 
             preparedStatement.setString(1, toString().valueOf(amount));
 

@@ -9,14 +9,18 @@
         <table>
             <thead>
             <tr>
-                <th> First name </th>
-                <th> Last name </th>
+                <th> Name </th>
+                <th> Artist </th>
+                <th> Album </th>
+                <th> Genre </th>
             </tr>
             </thead>
             <tbody>
-                <tr th:each="customer: ${customers}">
-                    <td th:text="${customer.firstName}" />
-                    <td th:text="${customer.lastName}" />
+                <tr th:each="track: ${searchResults}">
+                    <td th:text="${track.getName()}" />
+                    <td th:text="${track.getAlbum().getArtist()}" />
+                    <td th:text="${track.getAlbum().getTitle()}" />
+                    <td th:text="${track.getGenre.getName()}" />
                 </tr>
             </tbody>
         </table>
