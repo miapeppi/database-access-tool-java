@@ -51,9 +51,12 @@ public class TrackRepository implements com.noroff.Ass2DataAccess.data.interface
             PreparedStatement preparedStatement = conn.prepareStatement(
                     "SELECT Track.TrackId AS TrackId, Track.Name AS TrackName, " +
                             "Album.Title AS Title, " +
+                            "Artist.Name AS ArtistName, " +
                             "Genre.Name AS GenreName " +
-                            "FROM Track INNER JOIN Album ON Track.AlbumId = Album.AlbumId " +
+                            "FROM Track " +
+                            "INNER JOIN Album ON Track.AlbumId = Album.AlbumId " +
                             "INNER JOIN Genre ON Track.GenreId = Genre.GenreId " +
+                            "INNER JOIN Artist ON Album.ArtistId = Artist.ArtistId " +
                             "WHERE TrackName LIKE ? " +
                             "GROUP BY Track.TrackId, Track.Name, Track.Composer " +
                             "ORDER BY TrackId DESC");
@@ -69,6 +72,11 @@ public class TrackRepository implements com.noroff.Ass2DataAccess.data.interface
 
                 Album album = new Album();
                 album.setTitle(resultSet.getString("Title"));
+
+                Artist artist = new Artist();
+                artist.setName(resultSet.getString("ArtistName"));
+
+                album.setArtist(artist);
 
                 Genre genre = new Genre();
                 genre.setName(resultSet.getString("GenreName"));

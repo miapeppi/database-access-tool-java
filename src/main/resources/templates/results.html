@@ -18,7 +18,7 @@
             <tbody>
                 <tr th:each="track: ${searchResults}">
                     <td th:text="${track.getName()}" />
-                    <td th:text="${track.getAlbum().getArtist()}" />
+                    <td th:text="${track.getAlbum().getArtist().getName()}" />
                     <td th:text="${track.getAlbum().getTitle()}" />
                     <td th:text="${track.getGenre.getName()}" />
                 </tr>
