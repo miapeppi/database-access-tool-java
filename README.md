@@ -1,6 +1,6 @@
 # Assignment 6
 ### Access and expose a database
-This project contains API for retrieving customer data from [Chinook database](https://www.sqlitetutorial.net/sqlite-sample-database/) and [Thymeleaf](https://www.thymeleaf.org/) for displaying views.
+This project contains API for retrieving customer data from [Chinook database](https://www.sqlitetutorial.net/sqlite-sample-database/) and [Thymeleaf](https://www.thymeleaf.org/) for displaying views. The application is published as a Docker container on [Heroku](https://dashboard.heroku.com/).
 
 ### API
 - Read all the customers in the database
@@ -19,3 +19,6 @@ This project contains API for retrieving customer data from [Chinook database](h
   - Has a search bar which is used to search for tracks
 - Results view
   - Shows a row of results containing track name, artist, album, and genre for the query the user has made
+
+### Published application
+[Heroku](https://java-data-access-as2.herokuapp.com/)
