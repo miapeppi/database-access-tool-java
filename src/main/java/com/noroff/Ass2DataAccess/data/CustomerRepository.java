@@ -185,14 +185,17 @@ public class CustomerRepository implements com.noroff.Ass2DataAccess.data.interf
         try (ConnectionManager mng = ConnectionManager.getInstance()){
             Connection conn = mng.getConnection();
             PreparedStatement preparedStatement = conn.prepareStatement(
-                    "SELECT COUNT(CustomerId), Country FROM Customer GROUP BY Country ORDER BY COUNT(CustomerId) DESC");
+                    "SELECT COUNT(CustomerId) AS NumberOfCustomers, Country " +
+                            "FROM Customer " +
+                            "GROUP BY Country " +
+                            "ORDER BY COUNT(CustomerId) DESC");
 
             ResultSet resultSet = preparedStatement.executeQuery();
 
             while(resultSet.next()) {
                 CustomerCountry custCountry = new CustomerCountry();
                 custCountry.setCountry(resultSet.getString("Country"));
-                custCountry.setNumberOfCustomers(Integer.valueOf(resultSet.getString("COUNT(CustomerId)")));
+                custCountry.setNumberOfCustomers(Integer.valueOf(resultSet.getString("NumberOfCustomers")));
                 list.add(custCountry);
             }
 
