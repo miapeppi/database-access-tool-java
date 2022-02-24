@@ -1,8 +1,8 @@
-#Assignment 6
-###Access and expose a database
+# Assignment 6
+### Access and expose a database
 This project contains API for retrieving customer data from [Chinook database](https://www.sqlitetutorial.net/sqlite-sample-database/) and [Thymeleaf](https://www.thymeleaf.org/) for displaying views.
 
-###API
+### API
 - Read all the customers in the database
 - Read a specific customer from the database by Id
 - Read a specific customer by name
@@ -13,7 +13,7 @@ This project contains API for retrieving customer data from [Chinook database](h
 - Customers who are the highest spenders (total in invoice table is the largest), ordered descending
 - For a given customer, their most popular genre
     
-###Thymeleaf
+### Thymeleaf
 - Home view
   - Shows 5 random artists, 5 random songs, and 5 random genres
   - Has a search bar which is used to search for tracks
